@@ -13,7 +13,6 @@ def plotAngleAgainstTime(s):
     p6 = win.addPlot(title="Updating plot")
     curve = p6.plot(pen='y')
     data = []
-    ptr = 0
     def update():
         data.append(s.getCurAngle())
         curve.setData(data)
@@ -24,9 +23,10 @@ def plotAngleAgainstTime(s):
 
 def main():
     s = Servo(180, 0.001)
-    while True: 
+    s.plot()
+    while True:
+        print(s.getCurAngle())
         s.hold(1)
-        plotAngleAgainstTime(s)
 
 
 if __name__ == '__main__':

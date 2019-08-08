@@ -1,3 +1,8 @@
+from multiprocessing import Process
+from pyqtgraph.Qt import QtGui, QtCore
+import numpy as np
+import pyqtgraph as pg
+
 class Servo():
     def __init__(self, max_angle, turn_rate):
         self.max_angle = max_angle
@@ -22,6 +27,27 @@ class Servo():
                 self.cur_angle -= self.turn_rate
             else:
                 self.cur_angle -= delta_angle
+
+    def plotAngleAgainstTime(self):
+        app = QtGui.QApplication([])
+
+        win = pg.GraphicsWindow(title="Angle vs. Time")
+        plt = win.addPlot(title="Current angle")
+        curve = plt.plot(pen="y")
+        data=[]
+        def update():
+            data.append(self.getCurAngle())
+            curve.setData(data)
+        timer = QtCore.QTimer()
+        timer.timeout.connect(update)
+        timer.start(50)
+        QtGui.QApplication.instance().exec_()
+    
+    def plot(self):
+        p = Process(target=self.plotAngleAgainstTime)
+        p.start()
+
+        
 
 def main():
     s = Servo(180, 0.001)
