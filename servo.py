@@ -43,6 +43,7 @@ class Servo():
         timer.start(50)
         QtGui.QApplication.instance().exec_()
     
+    # TODO: shared variable 
     def plot(self):
         p = Process(target=self.plotAngleAgainstTime)
         p.start()
