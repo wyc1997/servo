@@ -42,7 +42,9 @@ class Servo():
         timer.timeout.connect(update)
         timer.start(50)
         QtGui.QApplication.instance().exec_()
-#this is a branch test
+    
+    # TODO: shared variable 
+
     def plot(self):
         p = Process(target=self.plotAngleAgainstTime)
         p.start()
