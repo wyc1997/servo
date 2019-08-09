@@ -7,7 +7,6 @@ def main():
         print(s.getCurAngle())
         s.hold(1)
 
-
 if __name__ == '__main__':
     main()
     
