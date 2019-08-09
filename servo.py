@@ -5,14 +5,27 @@ import pyqtgraph as pg
 
 class Servo():
     def __init__(self, max_angle, turn_rate):
+        '''
+        Constructor accepts two parameters: 
+        max_angle: the largest angle the servo is able to turn to
+        turn_rate: the 
+        '''
         self.max_angle = max_angle
         self.turn_rate = turn_rate
         self.cur_angle = Value('d', 0)
     
     def getCurAngle(self):
+        '''
+        return the current angle, taking the minimum angle as 0
+        '''
         return self.cur_angle.value
 
     def hold(self, position):
+        '''
+        takes 1 parameter:
+        position: ranges from 0-1, where 0 stands for min angle, 1 stands for max angle, and 
+        0.5 stands for neutral position
+        '''
         if position > 1 or position < 0:
             return "invalid input: must range from 0 to 1"
         target_angle = position * self.max_angle
@@ -28,6 +41,10 @@ class Servo():
             else:
                 self.cur_angle.value -= delta_angle
 
+    # helper function: can add parameters to plot different graphs (currently it is just angle 
+    # vs time)
+    # TODO: make the plot scrolling by changing the range of x axis
+    #       fix an initial range
     def plotingUtilities(self):
         app = QtGui.QApplication([])
 
@@ -48,18 +65,10 @@ class Servo():
         timer.start(100)
         QtGui.QApplication.instance().exec_()
     
-    # TODO: shared variable 
+    # functions to start a sub-process to display the plot while allowing the main program to 
+    # continue
     def plotAngleAgainstTime(self):
         p = Process(target=self.plotingUtilities)
         p.start()
 
         
-
-def main():
-    s = Servo(180, 0.001)
-    while True:
-        s.hold(1)
-        print(s.getCurAngle())
-
-if __name__ == "__main__":
-    main()
