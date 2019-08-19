@@ -2,13 +2,14 @@ from multiprocessing import Process, Value
 from pyqtgraph.Qt import QtGui, QtCore
 import numpy as np
 import pyqtgraph as pg
+import time
 
 class Servo():
     def __init__(self, max_angle, turn_rate):
         '''
         Constructor accepts two parameters: 
         max_angle: the largest angle the servo is able to turn to
-        turn_rate: the 
+        turn_rate: unit: degree per 0.05s
         '''
         self.max_angle = max_angle
         self.turn_rate = turn_rate
@@ -40,6 +41,7 @@ class Servo():
                 self.cur_angle.value -= self.turn_rate
             else:
                 self.cur_angle.value -= delta_angle
+        time.sleep(0.05) 
 
     # helper function: can add parameters to plot different graphs (currently it is just angle 
     # vs time)

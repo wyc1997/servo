@@ -1,7 +1,7 @@
 from servo import Servo
 
 def main():
-    s = Servo(180, 0.001)
+    s = Servo(180, 1)
     s.plotAngleAgainstTime()
     while True:
         print(s.getCurAngle())
